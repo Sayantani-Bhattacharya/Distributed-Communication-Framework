@@ -42,3 +42,10 @@ Setting up the framework in Jetson and  deploying over a shared WiFi network.
 5. Serialization Library: Protocol buffer/ msgpack
 6. Point cloud library
 
+## Final Goal
+The ultimate goal of the project would be to develop an open source framework, that can be used by anyone working with multi agent systems (swarm, fleet, IOT). 
+It would be an out of the box system, deployable for low-latency reliable communication of large sensor data.
+
+## Minimum Viable Product
+To develop the same framework without consideration on discovery filters, latency, and compression. Basically, to just have a working system, where large 
+data is transfered among multiple agents with decent reliablity.
