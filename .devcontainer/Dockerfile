@@ -26,16 +26,20 @@ RUN chmod +x libuvc_installation.sh
 
 RUN /bin/bash -c "./libuvc_installation.sh"
  
-RUN apt-get update \
- && apt-get install -y \ 
-   #  ros-humble-librealsense2* \
-    ros-humble-realsense2-* \
- && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update \
+#  && apt-get install -y \ 
+#    #  ros-humble-librealsense2* \
+#     ros-humble-realsense2-* \
+#  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
  && apt-get install -y ros-humble-rtabmap-ros \
  && apt-get install -y ros-humble-turtlebot3* \
  && apt-get install -y usbutils \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update \
+   && apt-get install -y ros-humble-rmw-zenoh-cpp \
  && rm -rf /var/lib/apt/lists/*
 
 
