@@ -14,6 +14,13 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+# find_package(point)
+find_package(cv_bridge REQUIRED)
+find_package(image_transport REQUIRED)
+
+
+
 
 # if(BUILD_TESTING)
 #   find_package(ament_lint_auto REQUIRED)
@@ -33,9 +40,13 @@ add_executable(talker src/publisher_member_function.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
 
 add_executable(listener src/subscriber_member_function.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
+ament_target_dependencies(listener rclcpp std_msgs sensor_msgs)
+
+add_executable(publisher src/sensor_pub_simulator.cpp)
+ament_target_dependencies(publisher rclcpp std_msgs sensor_msgs) 
 
 install(TARGETS
   talker
   listener
+  publisher
   DESTINATION lib/${PROJECT_NAME})

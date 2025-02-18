@@ -14,7 +14,8 @@
 
 #include <functional>
 #include <memory>
-
+#include <sensor_msgs/msg/point_cloud2.hpp>
+#include <sensor_msgs/point_cloud2_iterator.hpp>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -28,6 +29,9 @@ public:
   {
     subscription_ = this->create_subscription<std_msgs::msg::String>(
       "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+
+    pc_subscriber = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+      "point_cloud", 10, std::bind(&MinimalSubscriber::point_cloud_callback, this, _1));
   }
 
 private:
@@ -35,7 +39,21 @@ private:
   {
     RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
   }
+  void point_cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const
+  {
+    RCLCPP_INFO(this->get_logger(), "Received Point Cloud Data");
+    // Process the point cloud data here
+    // Iterating through the points and print their coordinates.
+    sensor_msgs::PointCloud2Iterator<float> iter_x(*msg, "x");
+    sensor_msgs::PointCloud2Iterator<float> iter_y(*msg, "y");
+    sensor_msgs::PointCloud2Iterator<float> iter_z(*msg, "z");
+
+    for (size_t i = 0; i < msg->width; ++i, ++iter_x, ++iter_y, ++iter_z) {
+      RCLCPP_INFO(this->get_logger(), "Point %zu: x=%f, y=%f, z=%f", i, *iter_x, *iter_y, *iter_z);
+    }
+  }
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+  rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pc_subscriber;
 };
 
 int main(int argc, char * argv[])
