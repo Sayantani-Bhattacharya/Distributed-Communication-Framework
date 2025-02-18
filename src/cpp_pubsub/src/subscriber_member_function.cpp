@@ -16,6 +16,8 @@
 #include <memory>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <sensor_msgs/point_cloud2_iterator.hpp>
+#include <nav_msgs/msg/occupancy_grid.hpp>
+#include <nav_msgs/msg/map_meta_data.hpp>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -32,13 +34,19 @@ public:
 
     pc_subscriber = this->create_subscription<sensor_msgs::msg::PointCloud2>(
       "point_cloud", 10, std::bind(&MinimalSubscriber::point_cloud_callback, this, _1));
+
+    map_subscriber = this->create_subscription<nav_msgs::msg::OccupancyGrid>(
+      "map", 10, std::bind(&MinimalSubscriber::map_callback, this, _1));
   }
 
 private:
+
   void topic_callback(const std_msgs::msg::String & msg) const
   {
     RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
   }
+
+
   void point_cloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const
   {
     RCLCPP_INFO(this->get_logger(), "Received Point Cloud Data");
@@ -52,8 +60,19 @@ private:
       RCLCPP_INFO(this->get_logger(), "Point %zu: x=%f, y=%f, z=%f", i, *iter_x, *iter_y, *iter_z);
     }
   }
+
+  void map_callback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg) const
+  {
+    RCLCPP_INFO(this->get_logger(), "Received Occupancy Grid Map");
+    // Process the occupancy grid map here
+    // The map resolution and size
+    RCLCPP_INFO(this->get_logger(), "Map Resolution: %f", msg->info.resolution);
+    RCLCPP_INFO(this->get_logger(), "Map Size: %zu x %zu", msg->info.width, msg->info.height);
+  }
+
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pc_subscriber;
+  rclcpp::Subscription<nav_msgs::msg::OccupancyGrid>::SharedPtr map_subscriber;
 };
 
 int main(int argc, char * argv[])

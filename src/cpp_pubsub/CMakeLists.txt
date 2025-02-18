@@ -15,11 +15,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 # find_package(point)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
-
-
 
 
 # if(BUILD_TESTING)
@@ -40,13 +39,17 @@ add_executable(talker src/publisher_member_function.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
 
 add_executable(listener src/subscriber_member_function.cpp)
-ament_target_dependencies(listener rclcpp std_msgs sensor_msgs)
+ament_target_dependencies(listener rclcpp std_msgs sensor_msgs nav_msgs)
 
 add_executable(publisher src/sensor_pub_simulator.cpp)
 ament_target_dependencies(publisher rclcpp std_msgs sensor_msgs) 
+
+add_executable(map_publisher src/map_pub_simulator.cpp)
+ament_target_dependencies(map_publisher rclcpp std_msgs nav_msgs)
 
 install(TARGETS
   talker
   listener
   publisher
+  map_publisher
   DESTINATION lib/${PROJECT_NAME})
