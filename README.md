@@ -19,7 +19,7 @@ To enable collaborative exploration and criticality detection in dangerous/disat
 ## Steps:
 
 ### Development:
-1. Minimally Functional Program: the first step would be to create ROS publishers of pcl data from Jeton,integrating it with ros2-zenoh-bridge and have that transfer data to another subscriber node of the same Jetson. 
+1. Minimally Functional Program: the first step would be to create ROS publishers of point cloud and occupancy grid(map) data, integrating it with ros2-zenoh-bridge and have that transfer data to another subscriber node, running in the same system. 
 2. Then I would be adding compression, serialization and decompression features for custom msg types.
 3. Filtering or any other method to enhance discovery of packets.
 4. Enabling multi agent operation (should already be working, not sure though).
@@ -27,7 +27,9 @@ To enable collaborative exploration and criticality detection in dangerous/disat
 6. (Optional) Implement custom encryption for data packets before publishing over Zenoh.
 
 ### Deployment: 
-Setting up the framework in Jetson and  deploying over a shared WiFi network.
+Setting up the framework in Jetson and deploying over a shared WiFi network.
+Would likely need to build a wifi network system with the two GOs and master system(laptop).
+
 ### Test and Validate:
 1. Single Peer Test: Verify ROS2 publishes and Zenoh bridges the point-cloud data correctly.
 2. Multi-Peer Test.
@@ -38,9 +40,10 @@ Setting up the framework in Jetson and  deploying over a shared WiFi network.
 1. C++
 2. ROS2 humble
 3. Ubuntu 22 [Docker env] / Jetson Orin Nano
-4. Zenoh libraries and ros2-bridge.
+4. Zenoh libraries and ros2-bridge(rmw).
 5. Serialization Library: Protocol buffer/ msgpack
 6. Point cloud library
+7. Nav2 packages
 
 ## Final Goal
 The ultimate goal of the project would be to develop an open source framework, that can be used by anyone working with multi agent systems (swarm, fleet, IOT). 
