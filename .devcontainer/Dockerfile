@@ -40,8 +40,13 @@ RUN apt-get update \
 
 RUN apt-get update \
    && apt-get install -y ros-humble-rmw-zenoh-cpp \
+   && apt-get install -y ros-humble-pcl-ros \
  && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update \
+   && apt-get install -y ros-humble-image-transport \
+   && pip install opencv-python \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash"
 
