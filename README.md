@@ -1,6 +1,8 @@
 # Distributed low-level communication framework
 
 Author: Sayantani Bhattacharya
+</br>
+Timeline: This project is on pause currently.
 
 ## Project Objective:
 
