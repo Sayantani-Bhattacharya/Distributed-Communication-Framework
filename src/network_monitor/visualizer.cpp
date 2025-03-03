@@ -1,0 +1,1 @@
+// Module to visualize (Qt/PyQt) the network topology, message packets available, health, frequency and the network state.

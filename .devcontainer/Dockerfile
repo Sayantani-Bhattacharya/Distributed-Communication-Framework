@@ -46,6 +46,7 @@ RUN apt-get update \
 RUN apt-get update \
    && apt-get install -y ros-humble-image-transport \
    && pip install opencv-python \
+   && pip install pandas matplotlib seaborn \
  && rm -rf /var/lib/apt/lists/*
 
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash"
